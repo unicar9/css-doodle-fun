@@ -1,31 +1,57 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://unpkg.com/css-doodle@0.4.9/css-doodle.min.js"></script>    
-    <title>CSS Doodle Fun</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="css-doodle.js"></script>
+  <title>Rotating Halo</title>
+  <style>
+		html, body {
+			margin: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+  </style>
 </head>
 <body>
-    <div>hahahah</div>
-
-    <css-doodle>
-            :doodle {
-                @grid: 8 / 90%;
-                @shape: circle;
-              }
-              
-              transition: .2s @r(.6s);
-              border-radius: @pick(100% 0, 0 100%);
-              
-              will-change: transform;
-              transform: scale(@r(.25, 1.25));
-              
-              background: hsla(
-                calc(240 - 6 * @row() * @col()),
-                70%, 68%, @r(.8)
-              );
-    </css-doodle>
+	<css-doodle>
+		--cycle: @r(2s, 10s, .1);
+	
+		:doodle {
+			@grid: 1x20 / 800px;
+		}
+					
+		@place-cell: center;
+		@size: calc(@i() * 10%);
+	
+		border-radius: 50%;
+		border-style: @pick(dotted dashed, dashed double, double dotted);
+		border-width: calc(@i() * .5em);
+		border-color: hsla(
+			calc(@r(50, 100, 10) * @i()), 80%, 80%,
+			calc(10 / @i() * .5)
+		);
+		transform: rotate(@r(360deg));
+	
+		animation: rotation var(--cycle) linear infinite;
+	
+		@keyframes rotation {
+			0 { transform: rotate(0deg); }
+			25% { transform: scale(.7); }
+			50% {
+			transform: rotate(359deg);
+			transform: scale(1.2);
+			}
+			75% { transform: scale(.4); }
+			100% {
+			transform: rotate(0deg);
+			transform: scale(1);
+			}
+		}
+	
+	</css-doodle>
 </body>
 </html>
