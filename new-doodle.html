@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://unpkg.com/css-doodle@0.4.11/css-doodle.min.js"></script>  
+  <title>Rotating Halo</title>
+  <style>
+		html, body {
+			margin: auto;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+            background: black;
+		}
+  </style>
+</head>
+<body>
+	<css-doodle>
+   	
+		:doodle {
+            @grid: 30x1;
+            @size: 50px;
+        }
+
+        --delay: calc(@sin(@i() * @PI() / 15) * -1.5s); 
+
+        :container {
+            height: 100vh;
+
+            animation: rotation 4s ease-in-out infinite;
+        }
+
+        @place-cell: center;
+
+        transform-style: preserve-3d;
+        width: 50px;
+        height: 50px;
+
+        transform:
+            rotateY(@calc((@i() - 1) * 12)deg)
+            translateZ(@calc(25 / @tan(@PI() / 30))px)
+            ;
+					
+		border-radius: 50%;
+		border-style: @pick(dotted dashed, dashed double, double dotted);
+
+		border-color: hsla(
+			calc(@r(50, 100, 10) * @i()), 80%, 80%
+        );
+        
+		
+        animation: wave 3s ease-in-out var(--delay) infinite;
+
+		
+	
+		@keyframes rotation {
+			0% {
+                perspective: 300px;
+            }
+			50% {
+                perspective: 1000px;
+            }
+			100% {
+                perspective: 300px;
+            }
+        }
+        
+        @keyframes wave {
+            0% {
+               
+                transform: 
+                    rotateY(@calc((@i() - 1) * 12)deg)
+                    translateZ(@calc(25 / @tan(@PI() / 30))px)
+                    translateY(0px);
+            }
+			50% {
+           
+                transform: 
+                rotateY(@calc((@i() - 1) * 12)deg)
+                translateZ(@calc(25 / @tan(@PI() / 30))px)
+                translateY(100px);
+            }
+			100% {
+         
+                transform: 
+                rotateY(@calc((@i() - 1) * 12)deg)
+                translateZ(@calc(25 / @tan(@PI() / 30))px)
+                translateY(0px);
+            }
+
+        }
+	
+	</css-doodle>
+</body>
+</html>
+
+<!-- animation: rotation var(--cycle) linear infinite; -->
+        <!-- border-width: calc(@i() * .5em); -->
+        <!-- @size: calc(@i() * 10%); -->
+        <!-- @place-cell: center; -->
+        <!-- transform: rotate(@r(360deg)); -->
+        <!-- translateZ(calc(12 / @tan(@PI() / 12px))); -->
+        <!-- translateY(calc(@sin(@i()) * @PI() * 10px)) -->
