@@ -18,12 +18,12 @@
 </head>
 <body>
     <css-doodle>
-        --circleSize: 50px;
+        --circleSize: 60px;
         --color: hsl(calc(20 * @i()), 70%, 70%);
-        --delay: calc(@sin(@i() * @PI() / 15) * -1.2s); 
+        --delay: calc(@sin(@i() * @PI() / @size() * 2) * -1.2s); 
     
         :doodle {
-            @grid: 30x1 / var(--circleSize);
+            @grid: 40x1 / var(--circleSize);
         }
         :container {
             height: 100vh;
@@ -45,8 +45,8 @@
         border-color: var(--color);
         
         --trans: 
-            rotateY(calc((@i() - 1) * 12deg))
-            translateZ(calc(var(--circleSize) / @tan(@PI() / 15)));
+            rotateY(calc((@i() - 1) * @calc(360 / @size())deg))
+            translateZ(calc(var(--circleSize) / @tan(@PI() / @size() * 2)));
         
         transform-style: preserve-3d;
         transform: var(--trans) translateY(-50px);
